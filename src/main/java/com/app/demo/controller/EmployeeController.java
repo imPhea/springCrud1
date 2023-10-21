@@ -4,6 +4,7 @@ import com.app.demo.exception.NotFoundException;
 import com.app.demo.model.Employee;
 import com.app.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,4 +59,13 @@ public class EmployeeController implements Serializable {
         employeeRepository.delete(deleteEmployee);
         return ResponseEntity.ok(deleteEmployee);
     }
+
+    /* or
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable Long id) {
+        // check exist or not
+        Employee deleteEmployee = employeeRepository.findById(id).orElseThrow(()->new NotFoundException("Employee id="+id+" not exist."));
+        employeeRepository.delete(deleteEmployee);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } */
 }
